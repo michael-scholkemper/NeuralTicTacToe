@@ -39,11 +39,11 @@ public class TicTacToe {
         }
 
         while (!gameFinished()) {
-            //drawField(board);
-            while (performAction(player1.play(), player1) != 0) ;
+            drawField(board);
+            while (performAction(player1.play(board), player1) != 0) ;
             if (gameFinished()) break;
-            //drawField(board);
-            while (performAction(player2.play(), player2) != 0) ;
+            drawField(board);
+            while (performAction(player2.play(board), player2) != 0) ;
         }
         drawField(board);
         if (playerSymbol == '%') {

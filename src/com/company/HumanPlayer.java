@@ -8,7 +8,7 @@ public class HumanPlayer extends Player {
         super(s1);
     }
 
-    public int play() {
+    public int play(char[][] board) {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             return Integer.parseInt(br.readLine());

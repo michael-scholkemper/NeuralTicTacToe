@@ -7,8 +7,8 @@ public class Player {
         symbol = s1;
     }
 
-    public int play() {
+    public int play(char[][] board) {
         //TODO
-        return (int) (Math.random() * 9);
+        return (int) (Math.random() * board.length * board[0].length);
     }
 }

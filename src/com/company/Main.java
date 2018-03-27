@@ -4,9 +4,10 @@ public class Main {
 
     public static void main(String[] args) {
         char[][] board = new char[3][3];
-        int[] NNSize = new int[2];
-        NNSize[0] = 2;
+        int[] NNSize = new int[3];
+        NNSize[0] = 9;
         NNSize[1] = 3;
+        NNSize[2] = 9;
         double[] input = new double[2];
         input[0] = 2;
         input[1] = -1.5;
@@ -16,18 +17,19 @@ public class Main {
         System.out.print(nnp.NN.forwardPass(input)[0]);
 
 
-        TicTacToe ttt = new TicTacToe(new Player('X'), nnp, 3);
+        TicTacToe ttt = new TicTacToe(new HumanPlayer('X'), nnp, 3);
 
 
 
-        int Xwin = 0, Xlose = 0, draw = 0;
+        /*int Xwin = 0, Xlose = 0, draw = 0;
         for (int i = 0; i < 1; i++) {
             char outcome = ttt.newGame();
             if (outcome == 'X') Xwin++;
             else if (outcome == 'O') Xlose++;
             else draw++;
         }
-        System.out.println("wins: " + Xwin + ", losses: " + Xlose + ", draws: " + draw);
+        System.out.println("wins: " + Xwin + ", losses: " + Xlose + ", draws: " + draw);*/
+
     }
 
 

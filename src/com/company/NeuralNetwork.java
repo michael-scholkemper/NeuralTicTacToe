@@ -23,7 +23,7 @@ public class NeuralNetwork {
                     }
                 }
             }
-            neurons[i].add(new Neuron(true));
+            if (i < layerSizes.length - 1) neurons[i].add(new Neuron(true));
         }
     }
 
