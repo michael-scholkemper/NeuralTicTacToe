@@ -56,4 +56,16 @@ public class NeuralNetwork {
     public NeuralNetwork clone() {
         return new NeuralNetwork(layerSizes, neurons, weights);
     }
+
+    public void print() {
+        for (ArrayList<Neuron> an : neurons) {
+            for (Neuron n : an) {
+                for (double w : n.succsWeights) {
+                    System.out.print(w + ", ");
+                }
+                System.out.print(" | ");
+            }
+            System.out.println("");
+        }
+    }
 }

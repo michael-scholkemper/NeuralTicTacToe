@@ -28,6 +28,7 @@ public class Neuron {
     public void addPred(Neuron pred) {
         if (!preds.contains(pred)) {
             preds.add(pred);
+            pred.addSucc(this);
         }
     }
 
@@ -37,6 +38,15 @@ public class Neuron {
             succsWeights.add((double) 1);
             succ.addPred(this);
         }
+    }
+
+    public void remove() {
+        /*for(Neuron n:succs){
+            n.removePred(this);
+        }
+        for(Neuron n : preds){
+            n.removeSucc(this);
+        }*/
     }
 
     public void removeSucc(Neuron n) {

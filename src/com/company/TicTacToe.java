@@ -16,8 +16,6 @@ public class TicTacToe {
 
         player1 = p1;
         player2 = p2;
-
-        newGame();
     }
 
     public static void drawField(char[][] field) {
@@ -30,7 +28,7 @@ public class TicTacToe {
         System.out.println();
     }
 
-    public char newGame() {
+    public int newGame() {
         board = new char[boardSize][boardSize];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
@@ -38,20 +36,27 @@ public class TicTacToe {
             }
         }
 
+
         while (!gameFinished()) {
-            drawField(board);
-            while (performAction(player1.play(board), player1) != 0) ;
+            int player1Timer = 10, player2Timer = 10;//Hardcoded hyperparameter!!!!
+            //drawField(board);
+            while (performAction(player1.play(board), player1) != 0) {
+                if (player1Timer-- <= 0) return -1;
+            }
             if (gameFinished()) break;
-            drawField(board);
-            while (performAction(player2.play(board), player2) != 0) ;
+            //drawField(board);
+            while (performAction(player2.play(board), player2) != 0) {
+                if (player2Timer-- <= 0) return 1;
+            }
+            ;
         }
-        drawField(board);
+        //drawField(board);
         if (playerSymbol == '%') {
             System.out.println("It's a draw!");
         } else {
             System.out.println(playerSymbol + " won!");
         }
-        return playerSymbol;
+        return playerSymbol == 'X' ? 1 : playerSymbol == 'O' ? -1 : 0;
 
     }
 
