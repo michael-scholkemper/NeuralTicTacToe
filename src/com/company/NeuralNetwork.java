@@ -27,6 +27,12 @@ public class NeuralNetwork {
         }
     }
 
+    public NeuralNetwork(int[] pLayerSizes, ArrayList<Neuron>[] pNeurons, ArrayList<Double>[] pWeights) {
+        layerSizes = pLayerSizes.clone();
+        weights = pWeights.clone();
+        neurons = pNeurons.clone();
+    }
+
     //the networks forwardPass-method uses that the network has a layered structure
     public double[] forwardPass(double[] input) {
         for (int i = 0; i < input.length && i < neurons[0].size(); i++) {
@@ -45,5 +51,9 @@ public class NeuralNetwork {
             output[i] = neurons[neurons.length - 1].get(i).currentvalue;
         }
         return output;
+    }
+
+    public NeuralNetwork clone() {
+        return new NeuralNetwork(layerSizes, neurons, weights);
     }
 }

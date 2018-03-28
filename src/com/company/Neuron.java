@@ -26,13 +26,17 @@ public class Neuron {
     }
 
     public void addPred(Neuron pred) {
-        preds.add(pred);
+        if (!preds.contains(pred)) {
+            preds.add(pred);
+        }
     }
 
     public void addSucc(Neuron succ) {
-        succs.add(succ);
-        succsWeights.add((double) 1);
-        succ.addPred(this);
+        if (!succs.contains(succ)) {
+            succs.add(succ);
+            succsWeights.add((double) 1);
+            succ.addPred(this);
+        }
     }
 
     public void removeSucc(Neuron n) {

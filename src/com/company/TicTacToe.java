@@ -56,6 +56,10 @@ public class TicTacToe {
     }
 
     public int performAction(int action, Player p) {
+        if (action / boardSize >= boardSize) {
+            System.err.println("action beyond amount of moves!");
+            return 1;
+        }
         if (board[action / boardSize][action % boardSize] == ' ') {
             board[action / boardSize][action % boardSize] = p.symbol;
             return 0;
