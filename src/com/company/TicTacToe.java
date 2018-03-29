@@ -5,6 +5,7 @@ public class TicTacToe {
     char[][] board;
     int boardSize;
     char playerSymbol;
+    int player1_movesMade = 0, player2_movesMade = 0;
 
     public TicTacToe(Player p1, Player p2, int size) {
         if (p1.symbol == p2.symbol) {
@@ -13,6 +14,12 @@ public class TicTacToe {
         }
         boardSize = size;
 
+        board = new char[boardSize][boardSize];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                board[i][j] = ' ';
+            }
+        }
 
         player1 = p1;
         player2 = p2;
@@ -29,6 +36,8 @@ public class TicTacToe {
     }
 
     public int newGame() {
+        player1_movesMade = 0;
+        player2_movesMade = 0;
         board = new char[boardSize][boardSize];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
@@ -38,23 +47,24 @@ public class TicTacToe {
 
 
         while (!gameFinished()) {
-            int player1Timer = 10, player2Timer = 10;//Hardcoded hyperparameter!!!!
+            int player1Timer = 4, player2Timer = 4;//Hardcoded hyperparameter!!!!
             //drawField(board);
             while (performAction(player1.play(board), player1) != 0) {
                 if (player1Timer-- <= 0) return -1;
             }
+            player1_movesMade++;
             if (gameFinished()) break;
             //drawField(board);
             while (performAction(player2.play(board), player2) != 0) {
                 if (player2Timer-- <= 0) return 1;
             }
-            ;
+            player2_movesMade++;
         }
         //drawField(board);
         if (playerSymbol == '%') {
-            System.out.println("It's a draw!");
+            //System.out.println("It's a draw!");
         } else {
-            System.out.println(playerSymbol + " won!");
+            //System.out.println(playerSymbol + " won!");
         }
         return playerSymbol == 'X' ? 1 : playerSymbol == 'O' ? -1 : 0;
 

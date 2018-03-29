@@ -18,6 +18,7 @@ public class Neuron {
         succsWeights = new ArrayList<>();
     }
 
+
     public Neuron(boolean pisBias) {
         preds = new ArrayList<>();
         succs = new ArrayList<>();
@@ -35,7 +36,7 @@ public class Neuron {
     public void addSucc(Neuron succ) {
         if (!succs.contains(succ)) {
             succs.add(succ);
-            succsWeights.add((double) 1);
+            succsWeights.add((double) 0);
             succ.addPred(this);
         }
     }
@@ -80,7 +81,7 @@ public class Neuron {
         }
         double sum = 0;
         for (Neuron n : preds) {
-            sum += n.currentvalue;
+            sum += n.succsWeights.get(n.succs.indexOf(this)) * n.currentvalue;
         }
         currentvalue = 1 / (1 + exp(-sum));
     }

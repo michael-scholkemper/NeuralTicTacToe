@@ -14,23 +14,43 @@ public class NeuralNetwork {
 
         for (int i = 0; i < layerSizes.length; i++) {
             neurons[i] = new ArrayList<>();
+            weights[i] = new ArrayList<>();
             for (int j = 0; j < layerSizes[i]; j++) {
                 Neuron n = new Neuron();
                 neurons[i].add(n);
-                if (i > 0 && fullyConnected) {
-                    for (int k = 0; k < layerSizes[i - 1]; k++) {
+                if (i > 0) {
+                    for (int k = 0; k < neurons[i - 1].size(); k++) {
                         neurons[i - 1].get(k).addSucc(n);
+                        if (fullyConnected) {
+                            neurons[i - 1].get(k).changeWeight(n, Math.random());
+                        }
                     }
                 }
             }
-            if (i < layerSizes.length - 1) neurons[i].add(new Neuron(true));
+            Neuron biasNeuron = new Neuron(true);
+            if (i < layerSizes.length - 1) neurons[i].add(biasNeuron);
         }
     }
 
     public NeuralNetwork(int[] pLayerSizes, ArrayList<Neuron>[] pNeurons, ArrayList<Double>[] pWeights) {
-        layerSizes = pLayerSizes.clone();
-        weights = pWeights.clone();
-        neurons = pNeurons.clone();
+        layerSizes = new int[pLayerSizes.length];
+        for (int i = 0; i < pLayerSizes.length; i++) {
+            layerSizes[i] = pLayerSizes[i];
+        }
+        weights = new ArrayList[pWeights.length];
+        for (int i = 0; i < pWeights.length; i++) {
+            weights[i] = new ArrayList<>();
+            for (int j = 0; j < pWeights[i].size(); j++) {
+                weights[i].add(pWeights[i].get(j));
+            }
+        }
+        neurons = new ArrayList[pNeurons.length];
+        for (int i = 0; i < pNeurons.length; i++) {
+            neurons[i] = new ArrayList<>();
+            for (int j = 0; j < pNeurons[i].size(); j++) {
+                neurons[i].add(pNeurons[i].get(j));
+            }
+        }
     }
 
     //the networks forwardPass-method uses that the network has a layered structure
@@ -54,14 +74,22 @@ public class NeuralNetwork {
     }
 
     public NeuralNetwork clone() {
-        return new NeuralNetwork(layerSizes, neurons, weights);
+        NeuralNetwork clone = new NeuralNetwork(layerSizes, false);
+        for (int i = 0; i < clone.neurons.length; i++) {
+            for (int j = 0; j < clone.neurons[i].size(); j++) {
+                for (int k = 0; k < clone.neurons[i].get(j).succsWeights.size(); k++)
+                    clone.neurons[i].get(j).succsWeights.set(k, this.neurons[i].get(j).succsWeights.get(k).doubleValue());
+            }
+        }
+        return clone;
     }
 
     public void print() {
         for (ArrayList<Neuron> an : neurons) {
             for (Neuron n : an) {
-                for (double w : n.succsWeights) {
-                    System.out.print(w + ", ");
+                for (int i = 0; i < n.succsWeights.size(); i++) {
+                    if (n.succsWeights.get(i) != null)
+                        System.out.print(n.succsWeights.get(i) + ", ");
                 }
                 System.out.print(" | ");
             }
